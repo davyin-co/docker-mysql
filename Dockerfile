@@ -5,10 +5,11 @@
 #
 
 FROM oraclelinux:8-slim
-
+COPY https://raw.githubusercontent.com/docker-library/mysql/refs/heads/master/8.4/docker-entrypoint.sh /usr/local/bin/
 RUN set -eux; \
 	groupadd --system --gid 999 mysql; \
-	useradd --system --uid 999 --gid 999 --home-dir /var/lib/mysql --no-create-home mysql
+	useradd --system --uid 999 --gid 999 --home-dir /var/lib/mysql --no-create-home mysql && \
+	chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # add gosu for easy step-down from root
 # https://github.com/tianon/gosu/releases
@@ -116,7 +117,6 @@ RUN set -eux; \
 
 VOLUME /var/lib/mysql
 
-COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 3306 33060
