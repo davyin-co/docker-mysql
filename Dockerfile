@@ -52,14 +52,14 @@ RUN set -eux; \
     MYSQL_MAJOR=8.4; \
     MYSQL_VERSION=8.4.4-1.el8; \
     { \
-        echo '[mysql8.4-server-minimal]'; \
-        echo 'name=MySQL 8.4 Server Minimal'; \
+        echo '[mysql-8.4-community]'; \
+        echo 'name=MySQL 8.4 Community'; \
         echo 'enabled=1'; \
         echo 'baseurl=https://repo.mysql.com/yum/mysql-8.4-community/el/8/$basearch/'; \
         echo 'gpgcheck=1'; \
         echo 'gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql'; \
         echo 'module_hotfixes=true'; \
-    } | tee /etc/yum.repos.d/mysql-community-minimal.repo; \
+    } | tee /etc/yum.repos.d/mysql-8.4-community.repo; \
     \
     # Install MySQL server
     microdnf install -y "mysql-community-server-$MYSQL_VERSION"; \
