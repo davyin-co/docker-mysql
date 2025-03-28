@@ -31,7 +31,7 @@ jobs:
         registry: registry.cn-hangzhou.aliyuncs.com
         username: ${{ secrets.ALIYUNCR_USERNAME }}
         password: ${{ secrets.ALIYUNCR_PASSWORD }}
-    - name: Build and push
+    - name: mysql server to dockerhub
       id: docker_build
       uses: docker/build-push-action@v2
       with:
@@ -40,7 +40,7 @@ jobs:
         platforms: linux/amd64,linux/arm64
         file: Dockerfile
         tags: davyinsa/mysql:8.4.4-oraclelinux8
-    - name: Build and push to ALIYUN CR
+    - name: mysql server to ALIYUN CR
       id: docker_build_to_aliyun
       uses: docker/build-push-action@v2
       with:
@@ -49,3 +49,21 @@ jobs:
         platforms: linux/amd64,linux/arm64
         file: Dockerfile
         tags: registry.cn-hangzhou.aliyuncs.com/davyin/mysql:8.4.4-oraclelinux8
+    - name: mysql server to dockerhub
+      id: docker_build_router
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        context: .
+        platforms: linux/amd64,linux/arm64
+        file: Dockerfile-router
+        tags: davyinsa/mysql-router:8.4.4-oraclelinux8
+    - name: mysql server to ALIYUN CR
+      id: docker_build_router_to_aliyun
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        context: .
+        platforms: linux/amd64,linux/arm64
+        file: Dockerfile-router
+        tags: registry.cn-hangzhou.aliyuncs.com/davyin/mysql-router:8.4.4-oraclelinux8
